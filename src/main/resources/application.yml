@@ -1,6 +1,22 @@
 spring:
   application:
     name: spring03
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ddarahakit2026@gmail.com
+    password: slzgskffupbrucvl
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          timeout: 5000
+
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: "jdbc:mariadb://10.10.10.30:3306/test"
