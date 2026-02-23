@@ -19,7 +19,7 @@ public class User {
     private String name;
     @Setter
     private String password;
-
+    @Setter
     private boolean enable;
     private String role;
 }

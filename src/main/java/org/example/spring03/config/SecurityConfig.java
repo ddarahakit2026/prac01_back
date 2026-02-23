@@ -37,12 +37,11 @@ import org.springframework.stereotype.Service;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
     private final AuthenticationConfiguration configuration;
     private final LoginFilter loginFilter;
     private final JwtFilter jwtFilter;
-
 
 
     @Bean // 개발자가 직접 개발한 코드가 아닌 클래스의 객체를 스프링의 빈으로 등록하려고 할 때 사용
@@ -53,7 +52,7 @@ public class SecurityConfig {
         // .authenticated() 는 로그인 한 사용자만 허용
         http.authorizeHttpRequests(
                 (auth) -> auth
-                        .requestMatchers("/user/login", "/login", "/user/signup").permitAll()
+                        .requestMatchers("/user/verify", "/user/login", "/login", "/user/signup").permitAll()
                         .requestMatchers("/test/ex01").permitAll()
                         .requestMatchers("/test/ex02").authenticated()
                         .requestMatchers("/test/ex03").hasRole("USER")

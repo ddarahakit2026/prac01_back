@@ -86,4 +86,11 @@ public class UserService implements UserDetailsService {
         // TODO : 7번
         return AuthUserDetails.from(user);
     }
+
+    public void verify(String uuid) {
+        EmailVerify emailVerify = emailVerifyRepository.findByUuid(uuid).orElseThrow();
+        User user = userRepository.findByEmail(emailVerify.getEmail()).orElseThrow();
+        user.setEnable(true);
+        userRepository.save(user);
+    }
 }
