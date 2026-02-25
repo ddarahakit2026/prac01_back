@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BaseResponseStatus {
 
-    SUCCESS(true, 2000, "여청이 성공했습니다"),
+    SUCCESS(true, 2000, "요청이 성공했습니다"),
 
     JWT_EXPIRED(false, 3001, "JWT 토큰이 만료되었습니다."),
     JWT_INVALID(false, 3002, "JWT 토큰이 유효하지 않습니다."),

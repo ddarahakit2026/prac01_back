@@ -24,7 +24,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         return path.startsWith("/user/login") ||
                 path.startsWith("/user/signup") ||
-                path.startsWith("/user/verify");
+                path.startsWith("/user/verify") ||
+                path.startsWith("/board/read/{idx}");
     }
 
     @Override
