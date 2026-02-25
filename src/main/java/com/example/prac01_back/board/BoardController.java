@@ -1,7 +1,7 @@
-package com.example.demo.board;
+package com.example.prac01_back.board;
 
 import lombok.RequiredArgsConstructor;
-import com.example.demo.board.model.BoardDto;
+import com.example.prac01_back.board.model.BoardDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

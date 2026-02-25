@@ -1,9 +1,9 @@
-package com.example.demo.user;
+package com.example.prac01_back.user;
 
-import com.example.demo.user.model.AuthUserDetails;
-import com.example.demo.user.model.EmailVerify;
-import com.example.demo.user.model.User;
-import com.example.demo.user.model.UserDto;
+import com.example.prac01_back.user.model.AuthUserDetails;
+import com.example.prac01_back.user.model.EmailVerify;
+import com.example.prac01_back.user.model.User;
+import com.example.prac01_back.user.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

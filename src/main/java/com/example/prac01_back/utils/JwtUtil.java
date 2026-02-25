@@ -1,4 +1,4 @@
-package com.example.demo.utils;
+package com.example.prac01_back.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

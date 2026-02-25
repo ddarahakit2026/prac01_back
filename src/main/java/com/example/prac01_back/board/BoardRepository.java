@@ -1,6 +1,6 @@
-package com.example.demo.board;
+package com.example.prac01_back.board;
 
-import com.example.demo.board.model.Board;
+import com.example.prac01_back.board.model.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //                                                     엔티티 클래스, 엔티티 클래스의 @Id 변수의 타입

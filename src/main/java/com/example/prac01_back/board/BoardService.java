@@ -1,8 +1,8 @@
-package com.example.demo.board;
+package com.example.prac01_back.board;
 
-import com.example.demo.board.model.Board;
+import com.example.prac01_back.board.model.Board;
 import lombok.RequiredArgsConstructor;
-import com.example.demo.board.model.BoardDto;
+import com.example.prac01_back.board.model.BoardDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

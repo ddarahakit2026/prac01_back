@@ -1,4 +1,4 @@
-package com.example.demo.board.model;
+package com.example.prac01_back.board.model;
 
 import lombok.*;
 

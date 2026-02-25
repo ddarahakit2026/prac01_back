@@ -1,8 +1,8 @@
-package com.example.demo.user;
+package com.example.prac01_back.user;
 
-import com.example.demo.user.model.AuthUserDetails;
-import com.example.demo.user.model.UserDto;
-import com.example.demo.utils.JwtUtil;
+import com.example.prac01_back.user.model.AuthUserDetails;
+import com.example.prac01_back.user.model.UserDto;
+import com.example.prac01_back.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
