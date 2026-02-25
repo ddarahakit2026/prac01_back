@@ -1,0 +1,35 @@
+package com.example.prac01_back.common.model;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Date;
+
+// 상속받아간 변수도 DB 테이블에 적용
+@MappedSuperclass
+
+// 엔티티의 변화를 감시하는 리스너
+// @PrePersist, @PreUpdate와 같은 특정 시점을 감지하기 위해 추가
+@EntityListeners(AuditingEntityListener.class)
+@Getter
+public class BaseEntity {
+    @Column(name="create_date", updatable = false, nullable = false)
+    private Date createAt;
+
+    @Column(name="update_date", nullable = false)
+    private Date updateAt;
+
+    @PrePersist
+    void createAt(){
+        this.createAt = Timestamp.from(Instant.now());
+        this.updateAt = Timestamp.from(Instant.now());
+    }
+
+    @PreUpdate
+    void updateAt(){
+        this.updateAt = Timestamp.from(Instant.now());
+    }
+}
