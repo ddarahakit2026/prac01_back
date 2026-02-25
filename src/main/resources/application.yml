@@ -1,3 +1,7 @@
+jwt:
+  secret: ${JWT_SECRET}
+  expire: ${JWT_EXPIRE}
+
 spring:
   application:
     name: spring04
