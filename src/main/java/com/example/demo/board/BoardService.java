@@ -12,9 +12,8 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public BoardDto.RegRes register(BoardDto.RegReq dto) {
-        Board entity = boardRepository.save(dto.toEntity());
-
+    public BoardDto.RegRes register(Long writerIdx, BoardDto.RegReq dto) {
+        Board entity = boardRepository.save(dto.toEntity(writerIdx));
         return BoardDto.RegRes.from(entity);
     }
 

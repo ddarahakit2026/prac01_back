@@ -1,6 +1,7 @@
 package com.example.demo.board.model;
 
 import com.example.demo.reply.model.ReplyDto;
+import com.example.demo.user.model.User;
 import lombok.*;
 
 import java.util.List;
@@ -11,10 +12,11 @@ public class BoardDto {
         private String title;
         private String contents;
 
-        public Board toEntity() {
+        public Board toEntity(Long writerIdx) {
             return Board.builder()
                     .title(this.title)
                     .contents(this.contents)
+                    .user(User.builder().idx(writerIdx).build())
                     .build();
         }
     }

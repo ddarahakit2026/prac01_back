@@ -1,9 +1,11 @@
 package com.example.demo.board;
 
 import com.example.demo.common.model.BaseResponse;
+import com.example.demo.user.model.AuthUserDetails;
 import lombok.RequiredArgsConstructor;
 import com.example.demo.board.model.BoardDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +18,10 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/reg")
-    public ResponseEntity register(@RequestBody BoardDto.RegReq dto) {
-
-        BoardDto.RegRes result = boardService.register(dto);
+    public ResponseEntity register(@AuthenticationPrincipal AuthUserDetails user, @RequestBody BoardDto.RegReq dto) {
+        BoardDto.RegRes result = boardService.register(user.getIdx(), dto);
         return ResponseEntity.ok(BaseResponse.success(result));
     }
-
 
     @GetMapping("/list")
     public ResponseEntity list() {
