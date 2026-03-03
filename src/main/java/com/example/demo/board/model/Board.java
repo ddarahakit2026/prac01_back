@@ -1,0 +1,43 @@
+package com.example.demo.board.model;
+
+import com.example.demo.common.model.BaseEntity;
+import com.example.demo.likes.model.Likes;
+import com.example.demo.reply.model.Reply;
+import com.example.demo.user.model.User;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import software.amazon.awssdk.annotations.NotNull;
+
+import java.util.List;
+
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Board extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idx;
+    @Column(nullable=false, length = 100)
+    private String title;
+    private String contents;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_idx")
+    private User user;
+
+    @OneToMany(mappedBy = "board")
+    List<Reply> replyList;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    List<Likes> likesList;
+
+    public void update(BoardDto.RegReq dto) {
+        this.title = dto.getTitle();
+        this.contents = dto.getContents();
+    }
+}
