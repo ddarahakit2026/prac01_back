@@ -2,6 +2,7 @@ package com.example.demo.user;
 
 import com.example.demo.user.model.AuthUserDetails;
 import com.example.demo.user.model.User;
+import com.example.demo.user.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -23,36 +24,17 @@ public class OAuth2UserService
         System.out.println("서비스 코드 실행");
         // OAuth2 로그인 실행
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
-        Map<String , Object> attributes = oAuth2User.getAttributes();
-        String providerId = ((Long)attributes.get("id")).toString();
-        System.out.println(providerId);
-
-        String email = providerId + "@kakao.social";
-        Map properties = (Map) attributes.get("properties");
-        String name = (String) properties.get("nickname");
+        // 내 서비스의 DTO로 변환
+        UserDto.OAuth dto = UserDto.OAuth.from(oAuth2User.getAttributes(), "kakao");
         // DB에 회원이 있나 없나 확인
-        Optional<User> result = userRepository.findByEmail(email);
-
+        Optional<User> result = userRepository.findByEmail(dto.getEmail());
         // 없으면 가입 시켜주기
-        User user = null;
-        if(!result.isPresent()) {
-            user = userRepository.save(
-                    User.builder()
-                            .email(email)
-                            .name(name)
-                            .password("kakao")
-                            .enable(true)
-                            .role("ROLE_USER")
-                            .build()
-            );
-
+        if (!result.isPresent()) {
+            User user = userRepository.save(dto.toEntity());
             return AuthUserDetails.from(user);
         }
-        // 있으면 해당 사용자 반환
         else {
-            user = result.get();
-
+            User user = result.get();
             return AuthUserDetails.from(user);
         }
     }
