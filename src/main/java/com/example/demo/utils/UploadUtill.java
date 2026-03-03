@@ -15,17 +15,19 @@ import java.util.Locale;
 public class UploadUtill {
     @Value("${project.upload.path}")
     private String defaultUploadPath;
-    public String makeFolder() {
-        // 오늘 날짜로 시간 받아오기
-        String data = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 
-        String folderPath = data.replace("/", File.separator);  //윈도우 / , 리눅스 \\ 로 알아서 설정됨
+    public String makeFolder() {
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
+        String folderPath = date.replace("/", File.separator);
 
         File uploadPath = new File(defaultUploadPath + File.separator + folderPath);
 
         if (!uploadPath.exists()) {
-            uploadPath.mkdir();
+            uploadPath.mkdirs();
+
         }
+
         return uploadPath.getPath();
     }
 }

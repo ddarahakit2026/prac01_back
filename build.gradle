@@ -23,9 +23,13 @@ dependencies {
     // 스프링 시큐리티 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // S3 라이브러리 추가
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.4.2'
+
+    // 소셜 로그인 라이브러리
+    implementation 'org.springframework.security:spring-security-oauth2-client'
 
     // jwt 라이브러리
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
@@ -34,6 +38,7 @@ dependencies {
 
     // 마리아 DB 추가
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.4.1'
+
     // JPA 추가
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 

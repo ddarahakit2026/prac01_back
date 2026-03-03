@@ -6,6 +6,7 @@ import com.example.demo.reply.model.Reply;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.logging.log4j.util.Lazy;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.swing.border.Border;
 import java.util.List;
@@ -26,6 +27,7 @@ public class User {
     private String password;
     @Setter
     private boolean enable;
+    @ColumnDefault(value="'ROLE_USER'")
     private String role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

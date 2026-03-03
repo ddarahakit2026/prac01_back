@@ -19,26 +19,28 @@ import java.util.Date;
 @Component
 public class JwtUtil {
     @Value("${jwt.secret}")
-    private String key ;
+    private String key;
 
     @Value("${jwt.expire}")
-    private  int expire;
+    private int expire;
 
-    private SecretKey encodedKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
+    public SecretKey getEncodedKey() {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
+    }
 
     public String createToken(Long idx, String email, String role) {
         String jwt = Jwts.builder()
                 .claim("idx", idx)
                 .claim("email", email)
                 .claim("role", role)
-                .issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + expire)).signWith(encodedKey).compact();
+                .issuedAt(new Date()).expiration(new Date(System.currentTimeMillis() + expire)).signWith(getEncodedKey()).compact();
 
         return jwt;
     }
 
-    public  Long getUserIdx(String token) {
+    public Long getUserIdx(String token) {
         Claims claims = Jwts.parser()
-                .verifyWith(encodedKey)
+                .verifyWith(getEncodedKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -48,7 +50,7 @@ public class JwtUtil {
 
     public String getUsername(String token) {
         Claims claims = Jwts.parser()
-                .verifyWith(encodedKey)
+                .verifyWith(getEncodedKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
@@ -58,7 +60,7 @@ public class JwtUtil {
 
     public String getRole(String token) {
         Claims claims = Jwts.parser()
-                .verifyWith(encodedKey)
+                .verifyWith(getEncodedKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

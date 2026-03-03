@@ -3,7 +3,35 @@ jwt:
   secret: ${JWT_SECRET}
   expire: ${JWT_EXPIRE}
 
+project:
+  upload:
+    path: ${UPLOAD_PATH}
+
+
+
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            client-name: kakao
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            # 카카오 로그인하기 할때, 따로 설정을 해야 됨
+            authorization-grant-type: authorization_code
+              # 어떤걸 받아 갈 건지
+            scope: profile_nickname
+            client-authentication-method: client_secret_post
+            # 설정을 어떻게 받아 갈거야
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
   application:
     name: spring04
   mail:
@@ -22,8 +50,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: ${DB_USER}
+    password: ${DB_PASS}
 
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
@@ -33,6 +61,15 @@ spring:
       hibernate:
         format_sql: true
 
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
+      s3:
+        bucket: ${S3_BUCKET}
+      region:
+        static: ap-northeast-2
 logging:
   level:
     org.hibernate.SQL: debug
