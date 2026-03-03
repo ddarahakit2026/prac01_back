@@ -32,8 +32,10 @@ public class BoardController {
 
 
     @GetMapping("/list")
-    public ResponseEntity list() {
-        List<BoardDto.ListRes> dto = boardService.list();
+    public ResponseEntity list(
+            @RequestParam(required = true, defaultValue = "0") int page,
+            @RequestParam(required = true, defaultValue = "5") int size) {
+        BoardDto.PageRes dto = boardService.list(page, size);
         return ResponseEntity.ok(BaseResponse.success(dto));
     }
 
