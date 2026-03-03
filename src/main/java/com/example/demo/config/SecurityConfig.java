@@ -69,6 +69,8 @@ public class SecurityConfig {
             config.successHandler(oAuth2AuthenticationSuccessHandler);
         });
 
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
         http.authorizeHttpRequests(
                 (auth) -> auth
                         .requestMatchers("/user/login", "/user/signup", "/user/verify").permitAll()
