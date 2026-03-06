@@ -46,9 +46,9 @@ const connectWebSocket = () => {
   ws.onConnect = () => {
     console.log("웹 소켓 연결 성공");
 
-    ws.subscribe('/topic/test', (message) => {
-      console.log(message);
-    })
+    // ws.subscribe('/topic/test', (message) => {
+    //   console.log(message);
+    // })
   }
 
   ws.activate()
