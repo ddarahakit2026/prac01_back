@@ -33,6 +33,10 @@ const subscribePush = async () => {
 const connectWebSocket = () => {
   const ws = new WebSocket("ws://localhost:8080/ws")
   socket.value = ws;
+
+  ws.onmessage = (message) => {
+    console.log(message.data)
+  }
 }
 const sendMessage = () => {
   socket.value.send(JSON.stringify(message.value))
