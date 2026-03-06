@@ -1,6 +1,8 @@
 package com.example.demo.config.websocket;
 
+import com.example.demo.user.model.AuthUserDetails;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -24,6 +26,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         log.debug("메시지 전송 받음 : {}", message.toString());
+        Authentication auth = (Authentication) session.getAttributes().get("user");
+        AuthUserDetails user = (AuthUserDetails) auth.getPrincipal();
+
+        System.out.printf(user.getUsername());
 
         for (WebSocketSession to : sessions) {
             if (to.equals(session)) {
