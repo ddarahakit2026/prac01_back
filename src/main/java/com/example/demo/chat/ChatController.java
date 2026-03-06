@@ -3,8 +3,9 @@ package com.example.demo.chat;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
+@RestController
 public class ChatController {
 
     // WebSocketConfig 클래스에서 설정해둔 /app 뒤에 /test로 메시지를 보내면 해당 메소드를 실행

@@ -36,9 +36,10 @@ const subscribePush = async () => {
 
 }
 const connectWebSocket = () => {
-  const ws = new Client(
-      {brokerUrl: "ws://localhost:5173/ws"}
-  )
+  const ws = new Client({
+    brokerURL: 'ws://localhost:5173/ws',
+  });
+
   socket.value = ws;
 
   ws.onConnect = () => {
@@ -48,9 +49,14 @@ const connectWebSocket = () => {
       console.log(message);
     })
   }
+
+  ws.activate()
 }
 const sendMessage = () => {
-  socket.value.send(JSON.stringify(message.value))
+  socket.value.publish({
+    destination: '/app/test',
+    body: JSON.stringify(message.value)
+  })
 }
 
 const login = async () => {
