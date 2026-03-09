@@ -7,6 +7,15 @@ project:
     path: ${UPLOAD_PATH}
   aes:
     key: aessecretkey01234567890123456789
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0   # 모든 요청에 대한 데이터를 수집하겠다.
+  otlp:
+    tracing:
+      endpoint: http://10.10.10.50:4318/v1/traces
+
 spring:
   security:
     oauth2:

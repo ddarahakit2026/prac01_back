@@ -20,7 +20,6 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -29,7 +28,6 @@ dependencies {
 
     implementation 'nl.martijndwars:web-push:5.1.1'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
-
 
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4'
@@ -49,6 +47,11 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {

@@ -1,0 +1,27 @@
+1. Jaeger 설정
+    wget https://download.jaegertracing.io/v2.16.0/jaeger-2.16.0-linux-amd64.tar.gz
+    tar zxvf jaeger-2.16.0-linux-amd64.tar.gz
+    cd jaeger-2.16.0-linux-amd64
+    ./jaeger --set=receivers.otlp.protocols.http.endpoint=0.0.0.0:4318
+
+2. 그라파나 및 프로메테우스
+    1. 프로메테우스
+      1) 설치
+    	apt update
+    	apt -y install prometheus
+
+      2) 실행
+    	systemctl restart prometheus
+
+    2. 그라파나
+      1) 설치
+    	wget -q -O /usr/share/keyrings/grafana.key https://packages.grafana.com/gpg.key
+    	echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://packages.grafana.com/oss/deb stable main" | tee -a /etc/apt/sources.list.d/grafana.list
+
+    	apt update
+    	apt -y install grafana
+
+
+      2) 실행
+    	systemctl restart grafana-server
+

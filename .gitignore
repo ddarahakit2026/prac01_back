@@ -41,3 +41,5 @@ gradlew*
 .env
 
 *.log
+
+.vite
