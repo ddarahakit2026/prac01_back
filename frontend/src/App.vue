@@ -4,8 +4,9 @@ import {Client} from '@stomp/stompjs'
 
 const localStream = ref(null);
 const localVideo = ref(null);
+const remoteVideo = ref(null);
 const socket = ref(null);
-let  peerConnection = null;
+let peerConnection = null;
 const senderId = Math.random().toString(36).substring(2, 9);
 
 const config = {
@@ -16,6 +17,9 @@ const config = {
 
 // 영상 및 오디오 스펙을 상대방에게 제안하는 메시지를 받았을 때 처리할 함수
 const handleOffer = async (data) => {
+  if (!peerConnection) {
+    createPeerConnection()
+  }
   await peerConnection.setRemoteDescription(
       new RTCSessionDescription(data.offer)
   );
@@ -45,13 +49,47 @@ const handleAnswer = async (data) => {
 // 영상 및 오디오 스펙 합의가 끝나면 실제 데이터를 주고받을 네트워크 주소를 교환하는 함수
 //  일반적으로 각 피어(클라이언트)는 공유기 내부에 있기 때문에 자신의 실제 공인 IP를 알 수 없다
 //  그래서 STUN 서버를 이용해서 알아낸 자신의 실제 공인 IP, 포트 번호를 이용해서 접속 가능한 경로를 교환
-const handleCandidate = (data) => {
+const handleCandidate = async (data) => {
   console.log(data);
+  await peerConnection.addIceCandidate(
+      new RTCIceCandidate(data.candidate)
+  );
 }
 
+const createPeerConnection = () => {
+  if (peerConnection) {
+    return;
+  }
+
+  peerConnection = new RTCPeerConnection(config)
+
+  if(localStream.value) {
+    localStream.value.getTracks().forEach((track) => {
+      peerConnection.addTrack(track, localStream.value)
+    })
+  }
+  peerConnection.onicecandidate = (event) => {
+    if (event.candidate) {
+      socket.value.publish({
+        destination: '/app/webrtc',
+        body: JSON.stringify({
+          type: 'candidate',
+          candidate: event.candidate,
+          senderId: senderId
+        })
+      })
+    }
+  }
+
+  peerConnection.ontrack = (event) => {
+    if (remoteVideo.value) {
+      remoteVideo.value.srcObject = event.streams[0]
+    }
+  }
+}
 
 const makeCall = async () => {
-  peerConnection = new RTCPeerConnection(config)
+  createPeerConnection()
   const offer = await peerConnection.createOffer();
   peerConnection.setLocalDescription(offer);
 
@@ -84,7 +122,7 @@ const startCamera = async () => {
       console.log(message)
       const data = JSON.parse(message.body);
 
-      if(data.senderId === senderId) {
+      if (data.senderId === senderId) {
         return;
       }
 
@@ -116,7 +154,7 @@ const startCamera = async () => {
     </div>
     <div>
       <div>상대 화면</div>
-      <video id="remoteVideo" autoplay playsinline></video>
+      <video ref="remoteVideo" autoplay playsinline></video>
     </div>
   </div>
 
