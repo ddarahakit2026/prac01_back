@@ -8,6 +8,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 public class ChatController {
@@ -33,6 +35,17 @@ public class ChatController {
     }
 
 
+    @MessageMapping("/webrtc")
+    @SendTo("/topic/webrtc")
+    public Map<String, Object> webrtc(
+            Map<String, Object> message
+            ) {
+        System.out.println("webrtc");
+
+        System.out.println(""+message.get("type"));
+
+        return message;
+    }
 
 
 
