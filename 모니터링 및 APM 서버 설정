@@ -6,22 +6,57 @@
 
 2. 그라파나 및 프로메테우스
     1. 프로메테우스
-      1) 설치
-    	apt update
-    	apt -y install prometheus
+      1) 기존 프로메테우스 제거
+        sudo systemctl stop prometheus
+        sudo systemctl disable prometheus
+        sudo systemctl unmask prometheus
+        sudo apt remove prometheus -y
+        sudo rm -f /etc/systemd/system/prometheus.service
+        sudo rm -f /lib/systemd/system/prometheus.service
+        sudo systemctl daemon-reload
 
-      2) 설정
-        vi /etc/default/prometheus
-            ARGS=""  이걸 변경  ARGS="--enable-feature=exemplar-storage"
+      2) 최신 버전 다운 및 설치
+        wget https://github.com/prometheus/prometheus/releases/download/v3.10.0/prometheus-3.10.0.linux-amd64.tar.gz
+        tar zxvf prometheus-3.10.0.linux-amd64.tar.gz
+        cd prometheus-3.10.0.linux-amd64
+        sudo cp prometheus /usr/local/bin/
+        sudo cp promtool /usr/local/bin/
+        sudo mkdir -p /etc/prometheus /var/lib/prometheus
 
-        vi /etc/prometheus/prometheus.yml 설정 밑에 다음 내용 추가
-          - job_name: spring
-            metrics_path: '/actuator/prometheus'
-            static_configs:
-              - targets: ['스프링의 IP주소:8080']
+      3) 설정
+        vi /etc/prometheus/prometheus.yml
+            안에 내용 다 삭제
+            global:
+              scrape_interval: 5s
+              evaluation_interval: 5s
 
-      3) 실행
-    	systemctl restart prometheus
+            scrape_configs:
+              - job_name: 'spring'
+                metrics_path: '/actuator/prometheus'
+                scrape_interval: 5s
+                static_configs:
+                  - targets:
+                      - '192.100.200.100:8080'   # Spring Boot 앱 IP:포트
+
+        vi /etc/systemd/system/prometheus.service
+            [Unit]
+            Description=Prometheus 3.8.1
+            After=network.target
+
+            [Service]
+            User=root
+            ExecStart=/usr/local/bin/prometheus \
+              --config.file=/etc/prometheus/prometheus.yml \
+              --storage.tsdb.path=/var/lib/prometheus \
+              --enable-feature=exemplar-storage
+            Restart=always
+
+            [Install]
+            WantedBy=multi-user.target
+
+        sudo systemctl daemon-reload
+        sudo systemctl start prometheus
+        sudo systemctl status prometheus
 
     2. 그라파나
       1) 설치
