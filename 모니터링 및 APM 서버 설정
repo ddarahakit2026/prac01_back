@@ -10,7 +10,17 @@
     	apt update
     	apt -y install prometheus
 
-      2) 실행
+      2) 설정
+        vi /etc/default/prometheus
+            ARGS=""  이걸 변경  ARGS="--enable-feature=exemplar-storage"
+
+        vi /etc/prometheus/prometheus.yml 설정 밑에 다음 내용 추가
+          - job_name: spring
+            metrics_path: '/actuator/prometheus'
+            static_configs:
+              - targets: ['스프링의 IP주소:8080']
+
+      3) 실행
     	systemctl restart prometheus
 
     2. 그라파나
@@ -25,3 +35,5 @@
       2) 실행
     	systemctl restart grafana-server
 
+      3) 대시보드 추가
+        22108
