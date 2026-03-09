@@ -1,0 +1,18 @@
+1. Jmeter 설정
+  1) 다운 및 압축 해제
+
+  2) 실행
+	압축 푼 폴더\bin\jmeter.bat
+
+  3) 설정
+	Test Plan 우클릭 -> Add -> Threads -> Thread Group
+		Number of Thread : 접속자 수				100
+		Ramp-up period : 접속자가 접속하는 시간		1
+		Loop Count : 반복 횟수					1
+
+	Thread Group 우클릭 -> Add -> Sampler -> HTTP Request
+        메소드, 경로, 매개변수 등 설정해서 테스트
+
+	Test Plan 우클릭 -> Add -> Listener -> View Result Tree
+
+	Test Plan 우클릭 -> Add ->Listener -> Summary Report
