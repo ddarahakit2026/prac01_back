@@ -1,5 +1,6 @@
 package com.example.demo.board.model;
 
+import com.example.demo.reply.model.Reply;
 import com.example.demo.reply.model.ReplyDto;
 import com.example.demo.user.model.AuthUserDetails;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -89,14 +90,14 @@ public class BoardDto {
         private List<ReplyDto.ReplyRes> replyList;
         private int likesCount;
 
-        public static ReadRes from(Board entity) {
+        public static ReadRes from(Board entity, List<Reply> replyList) {
             return ReadRes.builder()
                     .idx(entity.getIdx())
                     .title(entity.getTitle())
                     .contents(entity.getContents())
                     .writer(entity.getUser().getName())
-                    .replyList(entity.getReplyList().stream().map(ReplyDto.ReplyRes::from).toList())
-                    .likesCount(entity.getLikesList().size())
+                    .replyList(replyList.stream().map(ReplyDto.ReplyRes::from).toList())
+                    .likesCount(entity.getLikesCount())
                     .build();
         }
     }

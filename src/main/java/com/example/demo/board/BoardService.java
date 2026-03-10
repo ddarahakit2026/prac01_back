@@ -1,11 +1,14 @@
 package com.example.demo.board;
 
 import com.example.demo.board.model.Board;
+import com.example.demo.reply.ReplyRepository;
+import com.example.demo.reply.model.Reply;
 import com.example.demo.user.model.AuthUserDetails;
 import lombok.RequiredArgsConstructor;
 import com.example.demo.board.model.BoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import java.util.List;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     public BoardDto.RegRes register(AuthUserDetails user, BoardDto.RegReq dto) {
 
@@ -35,7 +39,11 @@ public class BoardService {
 
     public BoardDto.ReadRes read(Long idx) {
         Board board = boardRepository.findById(idx).orElseThrow();
-        return BoardDto.ReadRes.from(board);
+
+        Page<Reply> replies = replyRepository.findByBoard(
+                board, PageRequest.of(0, 4)
+        );
+        return BoardDto.ReadRes.from(board, replies.getContent());
     }
 
     public BoardDto.RegRes update(Long idx, BoardDto.RegReq dto) {
