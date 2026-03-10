@@ -96,7 +96,7 @@ public class BoardDto {
                     .contents(entity.getContents())
                     .writer(entity.getUser().getName())
                     .replyList(entity.getReplyList().stream().map(ReplyDto.ReplyRes::from).toList())
-                    .likesCount(entity.getLikesList().size())
+                    .likesCount(entity.getLikesCount())
                     .build();
         }
     }
