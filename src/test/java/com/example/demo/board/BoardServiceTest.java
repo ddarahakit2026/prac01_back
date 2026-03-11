@@ -49,9 +49,7 @@ class BoardServiceTest {
                 .name("test01")
                 .enable(true)
                 .build();
-        BoardDto.RegReq dto = new BoardDto.RegReq();
-        dto.setTitle("제목01");
-        dto.setContents("내용01");
+        BoardDto.RegReq dto = new BoardDto.RegReq("제목01", "내용01");
 
         Board returnEntity = Board.builder()
                 .idx(1L)
