@@ -4,6 +4,7 @@ import com.example.demo.board.model.Board;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
@@ -17,4 +18,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT b FROM Board b WHERE b.idx = :boardIdx") // JPQL
     Optional<Board> findByIdWithLock(Long boardIdx);
+
+//    @Lock(LockModeType.OPTIMISTIC)
+//    Optional<Board> findByIdx(Long boardIdx);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Board b SET b.likesCount = b.likesCount + 1 WHERE b.idx=:boardIdx")
+    int increaseLikeCount(Long boardIdx);
 }
