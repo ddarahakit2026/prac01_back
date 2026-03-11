@@ -48,7 +48,7 @@ class LikesServiceTest {
 
         long endTime = System.currentTimeMillis();
 
-        System.out.printf("처리 시간 : " + (endTime - startTime) + "ms");
+        System.out.println("처리 시간 : " + (endTime - startTime) + "ms");
         Board board = boardRepository.findById(1L).orElseThrow();
         assertEquals(threadCount, board.getLikesCount());
     }

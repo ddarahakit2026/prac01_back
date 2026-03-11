@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
     // 비관적 락
+    // SELECT * FROM board WHERE idx=1 FOR UPDATE
+    // UPDATE 문을 실행하기 위해서 SELECT로 조회하는거니까 내가 UPDATE다 할 때까지 다른 애들이 조회 못하게 잠금
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT b FROM Board b WHERE b.idx = :boardIdx") // JPQL
     Optional<Board> findByIdWithLock(Long boardIdx);
