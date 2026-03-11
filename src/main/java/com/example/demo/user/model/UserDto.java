@@ -1,6 +1,7 @@
 package com.example.demo.user.model;
 
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -52,6 +53,7 @@ public class UserDto {
         }
     }
 
+    @AllArgsConstructor
     @Getter
     public static class SignupReq {
         @Pattern(message = "이메일 형식이 아닙니다.", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")

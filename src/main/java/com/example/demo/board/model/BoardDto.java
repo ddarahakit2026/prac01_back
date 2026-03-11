@@ -29,6 +29,7 @@ public class BoardDto {
                     .build();
         }
     }
+    @AllArgsConstructor
     @Getter
     public static class RegReq {
         @Schema(description = "제목, 제목은 50글자까지만 입력 가능합니다.", required = true, example = "제목01")
