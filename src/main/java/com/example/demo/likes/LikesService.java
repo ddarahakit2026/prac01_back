@@ -6,6 +6,8 @@ import com.example.demo.likes.model.Likes;
 import com.example.demo.user.model.AuthUserDetails;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +49,11 @@ public class LikesService {
     //                  충돌이 생기면 예외를 발생 -> 해당 작업을 다시 실행
 
 
+    @Retryable(
+            retryFor = OptimisticLockException.class,
+            maxAttempts = 5,
+            backoff = @Backoff(delay = 50)
+    )
     @Transactional
     public /* synchronized */ void like(AuthUserDetails user, Long boardIdx) {
         Board board = boardRepository.findByIdx(boardIdx).orElseThrow(
