@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class Board extends BaseEntity {
     @JoinColumn(name = "user_idx")
     private User user;
 
+    @BatchSize(size = 5)
     @OneToMany(mappedBy = "board")
     List<Reply> replyList;
 

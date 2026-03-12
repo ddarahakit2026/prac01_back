@@ -27,14 +27,21 @@ public class BoardService {
         return BoardDto.RegRes.from(entity);
     }
 
-    public BoardDto.PageRes list(int page, int size) {
+    public List<BoardDto.ListRes> list() {
+
+        List<BoardDto.ListRes> result = boardRepository.findAllDto();
+
+        return result;
+    }
+
+    public Page<BoardDto.ListRes> list(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
 
         // 페이징 처리 ⭕, 페이지 번호가 필요하다 => Page 반환
         // 페이징 처리 ⭕, 페이지 번호가 필요없다. => Slice 반환
-        Page<Board> result = boardRepository.findAll(pageRequest);
+        Page<BoardDto.ListRes> result = boardRepository.findAllDtoWithPage(pageRequest);
 
-        return BoardDto.PageRes.from(result);
+        return result;
     }
 
     public BoardDto.ReadRes read(Long idx) {
