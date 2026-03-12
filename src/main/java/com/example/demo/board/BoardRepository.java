@@ -60,6 +60,18 @@ import java.util.Optional;
 */
 
 
+/*
+
+	// N+1 개선 전
+	SELECT * FROM board;							1번 		100 개
+
+	SELECT * FROM reply WHERE board_idx=?			100 번
+
+	// @BatchSize로 N+1 개선 후
+	SELECT * FROM board;							1번		100 개
+
+	SELECT * FROM reply WHERE board_idx IN (?, ?, ?, ?, ?)	1번
+*/
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
