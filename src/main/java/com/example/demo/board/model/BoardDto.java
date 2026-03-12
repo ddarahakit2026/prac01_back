@@ -63,19 +63,21 @@ public class BoardDto {
 
     @Builder
     @Getter
+    @AllArgsConstructor
     public static class ListRes {
         private Long idx;
         private String title;
         private String writer;
-        private int replyCount;
+        private Long replyCount;
         private int likesCount;
+
 
         public static ListRes from(Board entity) {
             return ListRes.builder()
                     .idx(entity.getIdx())
                     .title(entity.getTitle())
                     .writer(entity.getUser().getName())
-                    .replyCount(entity.getReplyList().size())
+                    .replyCount(Long.parseLong(""+entity.getReplyList().size()))
                     .likesCount(entity.getLikesList().size())
                     .build();
         }
