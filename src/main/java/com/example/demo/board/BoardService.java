@@ -19,6 +19,13 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;
+    private final BoardQueryRepository boardQueryRepository;
+
+    public List<BoardDto.ListRes> search(BoardDto.SearchReq dto) {
+        List<Board> result = boardQueryRepository.search(dto);
+
+        return result.stream().map(BoardDto.ListRes::from).toList();
+    }
 
     public BoardDto.RegRes register(AuthUserDetails user, BoardDto.RegReq dto) {
 
