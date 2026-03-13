@@ -21,8 +21,8 @@ public class BoardService {
     private final ReplyRepository replyRepository;
     private final BoardQueryRepository boardQueryRepository;
 
-    public List<BoardDto.ListRes> search() {
-        List<Board> result = boardQueryRepository.search();
+    public List<BoardDto.ListRes> search(BoardDto.SearchReq dto) {
+        List<Board> result = boardQueryRepository.search(dto);
 
         return result.stream().map(BoardDto.ListRes::from).toList();
     }
