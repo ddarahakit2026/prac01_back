@@ -7,6 +7,8 @@ import lombok.Getter;
 
 import java.util.Map;
 
+import static com.example.demo.common.Constants.DEFAULT_USER_ROLE;
+
 public class UserDto {
     @Getter
     @Builder
@@ -38,7 +40,7 @@ public class UserDto {
                     .name(name)
                     .provider(provider)
                     .enable(true)
-                    .role("ROLE_USER")
+                    .role(DEFAULT_USER_ROLE)
                     .build();
         }
 
