@@ -79,15 +79,16 @@ public class BoardDto {
         private Long idx;
         private String title;
         private String writer;
+        private int price;
         private Long replyCount;
         private int likesCount;
-
 
         public static ListRes from(Board entity) {
             return ListRes.builder()
                     .idx(entity.getIdx())
                     .title(entity.getTitle())
                     .writer(entity.getUser().getName())
+                    .price(entity.getPrice())
                     .replyCount(Long.parseLong(""+entity.getReplyList().size()))
                     .likesCount(entity.getLikesList().size())
                     .build();

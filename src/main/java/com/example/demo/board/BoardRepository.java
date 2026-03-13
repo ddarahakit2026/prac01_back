@@ -78,7 +78,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     // 레포지토리 통해서 Dto에 바로 데이터 담기
     //      성능 제일 좋음
     @Query("""
-            SELECT new com.example.demo.board.model.BoardDto$ListRes(b.idx, b.title, b.user.name, COUNT(r), b.likesCount) 
+            SELECT new com.example.demo.board.model.BoardDto$ListRes(b.idx, b.title, b.user.name, b.price, COUNT(r), b.likesCount) 
             FROM Board b
             LEFT JOIN b.replyList r
            """)
@@ -86,7 +86,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query("""
             SELECT new com.example.demo.board.model.BoardDto$ListRes(
-                       b.idx, b.title, b.user.name, (SELECT COUNT(r) FROM Reply r WHERE r.board.idx = b.idx), b.likesCount) 
+                       b.idx, b.title, b.user.name, b.price, (SELECT COUNT(r) FROM Reply r WHERE r.board.idx = b.idx), b.likesCount) 
             FROM Board b
            """)
     Page<BoardDto.ListRes> findAllDtoWithPage(Pageable pageable);

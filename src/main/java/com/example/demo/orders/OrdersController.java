@@ -26,4 +26,15 @@ public class OrdersController {
 
         return ResponseEntity.ok(BaseResponse.success(response));
     }
+
+    @PostMapping("/verify")
+    public ResponseEntity verify(
+            @AuthenticationPrincipal AuthUserDetails user,
+            @RequestBody OrdersDto.VerifyReq dto
+    ) {
+        ordersService.verify(user, dto);
+
+        return ResponseEntity.ok("성공");
+    }
+
 }
