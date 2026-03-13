@@ -21,6 +21,12 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
+    @GetMapping("/search")
+    public ResponseEntity search() {
+        List<BoardDto.ListRes> dto = boardService.search();
+        return ResponseEntity.ok(BaseResponse.success(dto));
+    }
+
     @Operation(summary = "게시글 등록", description = "제목, 내용을 입력해서 게시글을 작성하는 기능")
     @PostMapping("/reg")
     public ResponseEntity register(
